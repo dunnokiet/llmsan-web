@@ -1,13 +1,9 @@
-"use client";
-
-import { useState } from "react";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card } from "./ui/card";
+import { CodeBlock } from "./code-block";
 
 export function HeroSection() {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-background to-muted">
       <div className="container mx-auto px-4 md:px-6">
@@ -35,9 +31,7 @@ export function HeroSection() {
             <div className="flex items-center space-x-4 text-sm">
               <div className="flex items-center space-x-1">
                 <CheckCircle className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">
-                  Java & Python Support
-                </span>
+                <span className="text-muted-foreground">Java Support</span>
               </div>
               <div className="flex items-center space-x-1">
                 <CheckCircle className="h-4 w-4 text-primary" />
@@ -50,19 +44,10 @@ export function HeroSection() {
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <Card
-              className="relative overflow-hidden rounded-lg border-2 border-primary/20 transition-all duration-300 hover:border-primary/50 hover:shadow-lg"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <div className="p-4 bg-muted/50 font-mono text-sm overflow-hidden">
-                <pre className="text-xs sm:text-sm md:text-base overflow-x-auto">
-                  <code
-                    className={`transition-all duration-500 ${
-                      isHovered ? "text-red-500" : ""
-                    }`}
-                  >
-                    {`public void processData(String input) {
+            <Card className="relative overflow-hidden rounded-lg border-2 border-primary/20 transition-all duration-300 hover:border-primary/50 hover:shadow-lg group">
+              <div className="overflow-hidden font-mono text-xs xl:text-sm">
+                <CodeBlock lang="java" filename="test">
+                  {`public void processData(String input) {
   if (input == null) {
     return;
   }
@@ -80,26 +65,23 @@ export function HeroSection() {
   
   System.out.println("Result: " + result);
 }`}
-                  </code>
-                </pre>
-                {isHovered && (
-                  <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300 hover:opacity-100">
-                    <div className="text-center space-y-2">
-                      <p className="font-semibold text-lg">LLMSAN Detected:</p>
-                      <ul className="text-left text-sm space-y-1">
-                        <li className="text-red-500">
-                          • Line 9: Potential ArrayIndexOutOfBoundsException
-                        </li>
-                        <li className="text-red-500">
-                          • Line 13: Potential DivideByZeroException
-                        </li>
-                        <li className="text-amber-500">
-                          • Line 11: Potential NumberFormatException
-                        </li>
-                      </ul>
-                    </div>
+                </CodeBlock>
+                <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="text-center space-y-4">
+                    <p className="font-semibold text-xl">LLMSAN Detected:</p>
+                    <ul className="text-left font-semibold space-y-2">
+                      <li className="text-red-500">
+                        • Line 9: Potential ArrayIndexOutOfBoundsException
+                      </li>
+                      <li className="text-red-500">
+                        • Line 13: Potential DivideByZeroException
+                      </li>
+                      <li className="text-amber-500">
+                        • Line 11: Potential NumberFormatException
+                      </li>
+                    </ul>
                   </div>
-                )}
+                </div>
               </div>
             </Card>
           </div>

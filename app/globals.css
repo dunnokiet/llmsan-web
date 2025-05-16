@@ -120,3 +120,49 @@
     @apply bg-background text-foreground;
   }
 }
+
+.shiki {
+  counter-reset: step;
+  counter-increment: step 0;
+
+  .line {
+    @apply border-l-4 border-transparent;
+
+    &::before {
+      counter-increment: step;
+      @apply mr-6 inline-block w-4 border-transparent text-right text-muted-foreground content-[counter(step)];
+    }
+
+    &.highlighted,
+    &.diff {
+      @apply -ml-4 -mr-5 inline-block w-[calc(100%+(theme(spacing.5)+theme(spacing.4)))] pl-4 pr-5;
+    }
+
+    &.highlighted {
+      @apply border-border bg-muted;
+    }
+
+    &.diff {
+      &.add,
+      &.remove {
+        span:first-child::before {
+          @apply -ml-4 inline-flex w-4;
+        }
+      }
+
+      &.add {
+        @apply border-primary bg-primary/20 before:text-primary;
+        span:first-child::before {
+          @apply text-primary content-["+"];
+        }
+      }
+
+      &.remove {
+        @apply border-destructive bg-destructive/20 opacity-70 *:!text-muted-foreground before:text-destructive;
+        span:first-child::before {
+          @apply text-destructive content-["-"];
+        }
+      }
+    }
+  }
+}
