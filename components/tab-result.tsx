@@ -1,0 +1,272 @@
+import { use, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  AlertCircle,
+  CheckCircle2,
+  Circle,
+  CircleChevronRight,
+  CircleDot,
+  Code2,
+} from "lucide-react";
+
+import { Badge } from "./ui/badge";
+
+export function TabResult({ type, results, isAnalyzing }: any) {
+  const getBugTypeLabel = (type: string) => {
+    switch (type) {
+      case "dbz":
+        return "Divide by Zero";
+      case "npd":
+        return "NULL Pointer Dereference";
+      case "xss":
+        return "Cross-Site Scripting (XSS)";
+      case "ci":
+        return "OS Command Injection";
+      case "apt":
+        return "Absolute Path Traversal";
+      default:
+        return type;
+    }
+  };
+
+  const getStageIcon = (result: any) => {
+    if (result.stage === "completed") {
+      return <CheckCircle2 className="h-5 w-5 text-green-500" />;
+    } else if (result.stage === "started") {
+      return <CircleDot className="h-5 w-5 text-green-500" />;
+    } else if (result.stage === "detection") {
+      return <CircleDot className="h-5 w-5 text-amber-500" />;
+    } else if (result.stage === "trace_result") {
+      return <CircleChevronRight className="h-5 w-5 text-foreground" />;
+    } else if (result.result === true) {
+      return <CheckCircle2 className="h-5 w-5 text-green-500" />;
+    } else if (result.result === false) {
+      return <AlertCircle className="h-5 w-5 text-red-500" />;
+    } else {
+      return <Circle className="h-5 w-5 text-blue-500" />;
+    }
+  };
+
+  const getStageLabel = (stage: string) => {
+    return stage
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const renderTraceDetails = (trace: any) => {
+    if (!trace || !Array.isArray(trace)) return null;
+
+    return (
+      <div className="ml-7 mt-2 p-3 bg-primary/5 rounded-md text-sm">
+        <h4 className="font-medium mb-2">Trace Details:</h4>
+        <ul className="list-disc pl-5 space-y-1">
+          {trace.map((item, idx) => (
+            <li key={idx}>
+              Line {item[0]}: Variable{" "}
+              <code className="bg-background px-1 rounded">{item[1]}</code>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  const renderResultSummary = () => {
+    const finalResult = results.find(
+      (r: any) => r.stage === "completed"
+    )?.final_result;
+
+    if (!finalResult) return null;
+
+    return (
+      <div className="mt-6 p-4 border rounded-lg bg-background">
+        <h3 className="text-lg font-medium mb-3">Analysis Summary</h3>
+        <div className="grid grid-cols-2 gap-8">
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span>Type Sanitize:</span>
+              <Badge
+                variant={
+                  finalResult.type_sanitize > 0 ? "default" : "destructive"
+                }
+              >
+                {finalResult.type_sanitize}/{finalResult.total}
+              </Badge>
+            </div>
+            <div className="flex justify-between">
+              <span>Functionality Sanitize:</span>
+              <Badge
+                variant={
+                  finalResult.functionality_sanitize > 0
+                    ? "default"
+                    : "destructive"
+                }
+              >
+                {finalResult.functionality_sanitize}/{finalResult.total}
+              </Badge>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span>Order Sanitize:</span>
+              <Badge
+                variant={
+                  finalResult.order_sanitize > 0 ? "default" : "destructive"
+                }
+              >
+                {finalResult.order_sanitize}/{finalResult.total}
+              </Badge>
+            </div>
+            <div className="flex justify-between">
+              <span>Reachability Sanitize:</span>
+              <Badge
+                variant={
+                  finalResult.reachability_sanitize > 0
+                    ? "default"
+                    : "destructive"
+                }
+              >
+                {finalResult.reachability_sanitize}/{finalResult.total}
+              </Badge>
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <span>Final:</span>
+            <Badge
+              variant={
+                finalResult.order_sanitize > 0 ? "default" : "destructive"
+              }
+            >
+              {finalResult.final}
+            </Badge>
+          </div>
+          <div className="flex justify-between">
+            <span>Total:</span>
+            <Badge
+              variant={
+                finalResult.order_sanitize > 0 ? "default" : "destructive"
+              }
+            >
+              {finalResult.total}
+            </Badge>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderTraceResult = (result: any) => {
+    return (
+      <div className="ml-7 mt-2 p-3 bg-muted rounded-md text-sm">
+        <div className="flex justify-between font-medium">
+          <div>Type Sanitize: {result.type_sanitize}</div>
+          <div>Functionality Sanitize: {result.functionality_sanitize}</div>
+          <div>Orde Sanitize: {result.order_sanitize}</div>
+          <div>Reachability Sanitize: {result.reachability_sanitize}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const renderDetectionOutput = (output: any) => {
+    if (!output || !Array.isArray(output)) return null;
+
+    const bugCount = output[0];
+    const bugExplanations = output[2];
+
+    return (
+      <div className="ml-7 mt-2 p-3 bg-amber-50 rounded-md text-sm">
+        <h4 className="font-medium mb-2">Detection Results:</h4>
+        <p className="mb-2">Found {bugCount} potential bug(s)</p>
+        <div className="space-y-3">
+          {bugExplanations.map((explanation: string, idx: number) => (
+            <div key={idx} className="p-2 bg-background rounded border">
+              {explanation}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+  return (
+    <Card className="w-full">
+      <CardHeader>
+        <CardTitle>Bug Detection Results</CardTitle>
+        <CardDescription>
+          Log of detected bugs and sanitization results
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        {results.length > 0 ? (
+          <div className="space-y-6">
+            {results.map((result: any, index: any) => (
+              <div key={index} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    {getStageIcon(result)}
+                    <span className="font-medium">
+                      {getStageLabel(result.stage)}
+                    </span>
+                    {result.stage === "detection" && (
+                      <Badge variant="outline" className="ml-2">
+                        {getBugTypeLabel(type)}
+                      </Badge>
+                    )}
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {result.timestamp
+                      ? new Date(result.timestamp).toLocaleTimeString()
+                      : ""}
+                  </span>
+                </div>
+
+                {result.message && (
+                  <p className="text-sm text-muted-foreground ml-7">
+                    {result.message}
+                  </p>
+                )}
+
+                {result.trace && renderTraceDetails(result.trace)}
+
+                {result.output && renderDetectionOutput(result.output)}
+
+                {result.stage === "trace_result" &&
+                  renderTraceResult(result.result)}
+
+                {result.reason && result.reason.wrong_flow_response && (
+                  <div className="ml-7 mt-2 p-3 bg-destructive/5 rounded-md text-sm">
+                    <h4 className="font-medium mb-2">Analysis Details:</h4>
+                    <p className="whitespace-pre-line">
+                      {result.reason.wrong_flow_response}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {renderResultSummary()}
+          </div>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground">
+            <Code2 className="h-12 w-12 mb-4" />
+            <p>No analysis results yet</p>
+            <p className="text-sm mt-2">
+              {isAnalyzing
+                ? "Analysis in progress..."
+                : "Run an analysis to see results here"}
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}

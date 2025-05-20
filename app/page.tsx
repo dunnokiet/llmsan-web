@@ -20,6 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 // import { BugTypeChart } from "@/components/bug-type-chart";
 // import { CodeAnalyzer } from "@/components/code-analyzer";
 import { HeroSection } from "@/components/hero-section";
+import Demo from "@/components/demo";
 
 export default function Home() {
   return (
@@ -39,18 +40,6 @@ export default function Home() {
                 Features
               </Link>
               <Link
-                href="#demo"
-                className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                Demo
-              </Link>
-              <Link
-                href="#results"
-                className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-              >
-                Results
-              </Link>
-              <Link
                 href="https://github.com/chengpeng-wang/LLMSAN"
                 target="_blank"
                 className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
@@ -60,10 +49,23 @@ export default function Home() {
             </nav>
           </div>
           <div className="flex flex-1 items-center justify-end space-x-4">
-            <Button variant="outline" size="sm" className="hidden md:flex">
-              Documentation
+            <Button
+              variant="outline"
+              size="sm"
+              className="hidden md:flex"
+              asChild
+            >
+              <Link
+                href="https://chengpeng-wang.github.io/publications/LLMSAN_EMNLP2024.pdf"
+                target="_blank"
+              >
+                Paper
+              </Link>
             </Button>
-            <Button size="sm">Try Demo</Button>
+
+            <Button size="sm" asChild>
+              <Link href="#demo">Demo</Link>
+            </Button>
           </div>
         </div>
       </header>
@@ -143,34 +145,7 @@ export default function Home() {
             </p>
           </div>
           <div className="mx-auto max-w-5xl mt-8">
-            <Tabs defaultValue="analyzer" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="analyzer">Code Analyzer</TabsTrigger>
-                <TabsTrigger value="visualizer">Results Visualizer</TabsTrigger>
-              </TabsList>
-              <TabsContent value="analyzer" className="mt-4">
-                {/* <CodeAnalyzer /> */}
-              </TabsContent>
-              <TabsContent value="visualizer" className="mt-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Bug Detection Results</CardTitle>
-                    <CardDescription>
-                      Visualization of detected bugs and sanitization results
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="h-[400px] w-full">
-                      {/* <BugTypeChart /> */}
-                    </div>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <Button variant="outline">Export Results</Button>
-                    <Button>Generate Report</Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-            </Tabs>
+            <Demo />
           </div>
         </section>
 
@@ -234,18 +209,6 @@ export default function Home() {
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
               GitHub
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              Documentation
-            </Link>
-            <Link
-              href="#"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              Privacy
             </Link>
           </div>
         </div>

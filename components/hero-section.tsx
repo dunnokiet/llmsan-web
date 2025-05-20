@@ -2,6 +2,7 @@ import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "./ui/card";
 import { CodeBlock } from "./code-block";
+import Link from "next/link";
 
 export function HeroSection() {
   return (
@@ -20,12 +21,19 @@ export function HeroSection() {
               </p>
             </div>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
-              <Button size="lg" className="gap-1">
-                Get Started
-                <ArrowRight className="h-4 w-4" />
+              <Button size="lg" className="gap-1" asChild>
+                <Link href="#demo">
+                  Try Demo
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
               </Button>
-              <Button size="lg" variant="outline">
-                Learn More
+              <Button size="lg" variant="outline" asChild>
+                <Link
+                  href="https://chengpeng-wang.github.io/publications/LLMSAN_EMNLP2024.pdf"
+                  target="_blank"
+                >
+                  Read Paper
+                </Link>
               </Button>
             </div>
             <div className="flex items-center space-x-4 text-sm">
@@ -46,8 +54,9 @@ export function HeroSection() {
           <div className="flex items-center justify-center">
             <Card className="relative overflow-hidden rounded-lg border-2 border-primary/20 transition-all duration-300 hover:border-primary/50 hover:shadow-lg group">
               <div className="overflow-hidden font-mono text-xs xl:text-sm">
-                <CodeBlock lang="java" filename="test">
-                  {`public void processData(String input) {
+                <div className="text-xs xl:text-base">
+                  <CodeBlock lang="java">
+                    {`public void processData(String input) {
   if (input == null) {
     return;
   }
@@ -65,8 +74,9 @@ export function HeroSection() {
   
   System.out.println("Result: " + result);
 }`}
-                </CodeBlock>
-                <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  </CodeBlock>
+                </div>
+                <div className="absolute inset-0 bg-background/85 flex flex-col items-center justify-center p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <div className="text-center space-y-4">
                     <p className="font-semibold text-xl">LLMSAN Detected:</p>
                     <ul className="text-left font-semibold space-y-2">
