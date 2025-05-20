@@ -1,8 +1,8 @@
 import { ArrowRight, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "./ui/card";
-import { CodeBlock } from "./code-block";
 import Link from "next/link";
+import { CodeBlock } from "./code-block";
 
 export function HeroSection() {
   return (

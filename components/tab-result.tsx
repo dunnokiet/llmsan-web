@@ -1,10 +1,9 @@
-import { use, useRef, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -12,14 +11,65 @@ import {
   AlertCircle,
   CheckCircle2,
   Circle,
-  CircleChevronRight,
   CircleDot,
+  CircleEllipsis,
   Code2,
+  Loader2,
+  Wand2,
 } from "lucide-react";
 
 import { Badge } from "./ui/badge";
+import { toast } from "sonner";
 
-export function TabResult({ type, results, isAnalyzing }: any) {
+export function TabResult({
+  type,
+  results,
+  isAnalyzing,
+  model,
+  fileName,
+  handleChangeSantizedCode,
+  handleChangeActiveTab,
+}: any) {
+  const [isGeneratingFixes, setIsGeneratingFixes] = useState(false);
+
+  const handleGenerateFixes = async () => {
+    if (isGeneratingFixes || results.length === 0) {
+      if (results.length === 0) {
+        toast.error("Please analyze code first");
+      }
+      return;
+    }
+
+    setIsGeneratingFixes(true);
+
+    console.log(fileName);
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/sanitize?file_name=${fileName}&model_name=${model}&bug_type=${type}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch sanitized code");
+      }
+
+      const sanitizedCode = await response.text();
+
+      console.log(sanitizedCode);
+
+      handleChangeSantizedCode(sanitizedCode);
+      handleChangeActiveTab("sanitized");
+      toast.success("Generated fixes for detected bugs");
+      setIsGeneratingFixes(false);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to generate fixes");
+      setIsGeneratingFixes(false);
+    }
+  };
+
   const getBugTypeLabel = (type: string) => {
     switch (type) {
       case "dbz":
@@ -43,9 +93,9 @@ export function TabResult({ type, results, isAnalyzing }: any) {
     } else if (result.stage === "started") {
       return <CircleDot className="h-5 w-5 text-green-500" />;
     } else if (result.stage === "detection") {
-      return <CircleDot className="h-5 w-5 text-amber-500" />;
+      return <Circle className="h-5 w-5 text-amber-500" />;
     } else if (result.stage === "trace_result") {
-      return <CircleChevronRight className="h-5 w-5 text-foreground" />;
+      return <CircleEllipsis className="h-5 w-5 " />;
     } else if (result.result === true) {
       return <CheckCircle2 className="h-5 w-5 text-green-500" />;
     } else if (result.result === false) {
@@ -140,16 +190,6 @@ export function TabResult({ type, results, isAnalyzing }: any) {
             </div>
           </div>
           <div className="flex justify-between">
-            <span>Final:</span>
-            <Badge
-              variant={
-                finalResult.order_sanitize > 0 ? "default" : "destructive"
-              }
-            >
-              {finalResult.final}
-            </Badge>
-          </div>
-          <div className="flex justify-between">
             <span>Total:</span>
             <Badge
               variant={
@@ -159,7 +199,38 @@ export function TabResult({ type, results, isAnalyzing }: any) {
               {finalResult.total}
             </Badge>
           </div>
+          <div className="flex justify-between">
+            <span>Final:</span>
+            <Badge
+              variant={
+                finalResult.order_sanitize > 0 ? "default" : "destructive"
+              }
+            >
+              {finalResult.final}
+            </Badge>
+          </div>
         </div>
+        {finalResult && (
+          <div className="mt-6">
+            <Button
+              onClick={handleGenerateFixes}
+              className="w-full"
+              disabled={isGeneratingFixes}
+            >
+              {isGeneratingFixes ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Generating Fixes...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="mr-2 h-4 w-4" />
+                  Generate Fixes
+                </>
+              )}
+            </Button>
+          </div>
+        )}
       </div>
     );
   };
@@ -254,16 +325,19 @@ export function TabResult({ type, results, isAnalyzing }: any) {
             ))}
 
             {renderResultSummary()}
+            {isAnalyzing && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                  <span className="font-medium">Analyzing...</span>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground">
             <Code2 className="h-12 w-12 mb-4" />
             <p>No analysis results yet</p>
-            <p className="text-sm mt-2">
-              {isAnalyzing
-                ? "Analysis in progress..."
-                : "Run an analysis to see results here"}
-            </p>
           </div>
         )}
       </CardContent>

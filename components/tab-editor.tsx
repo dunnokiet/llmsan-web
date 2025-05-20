@@ -18,15 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  AlertCircle,
-  CheckCircle2,
-  Circle,
-  CircleSmall,
-  Code2,
-  Loader2,
-  Upload,
-} from "lucide-react";
+import { Loader2, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 export function TabEditor({
@@ -44,6 +36,8 @@ export function TabEditor({
   handleChangeActiveTab,
   handleChangeType,
   handleChangeIsAnalyzing,
+  handleChangeFileName,
+  handleChangeSantizedCode,
 }: any) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -78,9 +72,11 @@ export function TabEditor({
 
       if (file) {
         form.append("file", file);
+        handleChangeFileName(file.name.split(".")[0]);
       } else {
         const blob = new Blob([code], { type: "text/plain" });
         form.append("file", blob, `snippet.${language}`);
+        handleChangeFileName("snippet");
       }
 
       const res = await fetch(
@@ -201,6 +197,8 @@ export function TabEditor({
             handleChangeCode("");
             handleChangeResults([]);
             handleChangeFile(null);
+            handleChangeFileName("snippet");
+            handleChangeSantizedCode("");
           }}
         >
           Clear

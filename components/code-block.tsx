@@ -1,9 +1,6 @@
 import type { BundledLanguage } from "shiki";
 import { codeToHtml } from "shiki";
-import {
-  transformerNotationHighlight,
-  transformerNotationDiff,
-} from "@shikijs/transformers";
+import { transformerNotationDiff } from "@shikijs/transformers";
 
 interface CodeBlockProps {
   children: string;

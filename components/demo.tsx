@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { Suspense, useRef, useState } from "react";
 import { TabEditor } from "./tab-editor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { TabResult } from "./tab-result";
+import { TabSanitized } from "./tab-santinized";
 
 export default function Demo() {
   const [results, setResults] = useState<any[]>([]);
@@ -14,12 +15,15 @@ export default function Demo() {
   const [model, setModel] = useState("gpt-4.1-mini");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState("");
+  const [sanitizedCode, setSantinizedCode] = useState("");
 
   return (
     <Tabs value={activeTab} className="w-full" onValueChange={setActiveTab}>
-      <TabsList className="grid w-full grid-cols-2">
+      <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="editor">Code Analyzer</TabsTrigger>
         <TabsTrigger value="results">Results</TabsTrigger>
+        <TabsTrigger value="sanitized">Sanitized</TabsTrigger>
       </TabsList>
       <TabsContent value="editor" className="mt-4">
         <TabEditor
@@ -37,6 +41,8 @@ export default function Demo() {
           handleChangeFile={setFile}
           handleChangeType={setType}
           handleChangeModel={setModel}
+          handleChangeFileName={setFileName}
+          handleChangeSantizedCode={setSantinizedCode}
         />
       </TabsContent>
       <TabsContent value="results" className="mt-4">
@@ -45,11 +51,16 @@ export default function Demo() {
           isAnalyzing={isAnalyzing}
           type={type}
           code={code}
-          handleChangeResults={setResults}
+          fileName={fileName}
+          model={model}
           handleChangeActiveTab={setActiveTab}
-          handleChangeCode={setCode}
-          handleChangeFile={setFile}
+          handleChangeSantizedCode={setSantinizedCode}
         />
+      </TabsContent>
+      <TabsContent value="sanitized" className="mt-4">
+        <Suspense>
+          <TabSanitized code={sanitizedCode} />
+        </Suspense>
       </TabsContent>
     </Tabs>
   );
