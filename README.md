@@ -1,8 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LLMSAN Web Interface
+
+**LLMSAN Web** is the frontend interface for **LLMSAN** (Large Language Model Sanitizer), a system that uses LLMs to detect and sanitize bugs in source code. This interface allows developers to interact with the backend without needing to write API calls manually.
+
+## Overview
+
+LLMSAN is composed of two parts:
+
+- **Backend**: [`llmsan-fork`](https://github.com/dunnokiet/llmsan-fork) – A FastAPI service that performs bug analysis and code sanitization using OpenAI models.
+- **Frontend**: `llmsan-web` – A Next.js web application that communicates with the backend via REST APIs.
+
+## Features
+
+- Upload and analyze source code for bugs
+- One-click code sanitization using LLMs
+- Supports multiple bug types: NPD, DBZ, CI, APT, XSS
+- Multi-language support via Tree-sitter grammars
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone This Repository
+
+```bash
+git clone https://github.com/dunnokiet/llmsan-web.git
+cd llmsan-web
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn instll
+# or
+pnpm instaall
+# or
+bun install
+```
+
+### 3. Start the Development Server
 
 ```bash
 npm run dev
@@ -16,21 +51,31 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Backend Setup (`llmsan-fork`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To run the LLMSAN backend locally:
 
-## Learn More
+```bash
+git clone https://github.com/dunnokiet/llmsan-fork.git
+cd llmsan-fork
 
-To learn more about Next.js, take a look at the following resources:
+# Install dependencies
+pip install -r requirements.txt
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Build Tree-sitter parsers
+cd lib
+python build.py
+cd ..
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Set your OpenAI API key
+echo "OPENAI_API_KEY=sk-xxxxxxxx" > .env.local
 
-## Deploy on Vercel
+# Run the API server
+python src/index.py
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Then visit: http://localhost:8000/docs for the Swagger API.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
