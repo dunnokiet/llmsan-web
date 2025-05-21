@@ -137,6 +137,8 @@ export function TabResult({
 
     if (!finalResult) return null;
 
+    if (finalResult.total == 0) return null;
+
     return (
       <div className="mt-6 p-4 border rounded-lg bg-background">
         <h3 className="text-lg font-medium mb-3">Analysis Summary</h3>
