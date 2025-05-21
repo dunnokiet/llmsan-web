@@ -54,6 +54,9 @@ export function TabEditor({
       };
       reader.readAsText(selectedFile);
     }
+
+    handleChangeResults([]);
+    handleChangeSantizedCode("");
   };
 
   const handleFileUploadClick = () => {
@@ -199,6 +202,8 @@ export function TabEditor({
             handleChangeFile(null);
             handleChangeFileName("snippet");
             handleChangeSantizedCode("");
+            handleChangeActiveTab("editor");
+            handleChangeIsAnalyzing(false);
           }}
         >
           Clear
