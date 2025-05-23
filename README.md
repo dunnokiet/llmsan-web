@@ -1,6 +1,6 @@
-# LLMSAN Web Interface
+# LLMSAN
 
-**LLMSAN Web** is the frontend interface for **LLMSAN** (Large Language Model Sanitizer), a system that uses LLMs to detect and sanitize bugs in source code. This interface allows developers to interact with the backend without needing to write API calls manually.
+**LLMSAN** is the frontend interface for **LLMSAN** (Large Language Model Sanitizer), a system that uses LLMs to detect and sanitize bugs in source code. This interface allows developers to interact with the backend without needing to write API calls manually.
 
 <img alt="Splash" src="./public/splash.png" width="100%" />
 
@@ -53,7 +53,7 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Backend Setup (`llmsan-fork`)
+## Backend Setup (`llmsan-api`)
 
 To run the LLMSAN backend locally:
 
