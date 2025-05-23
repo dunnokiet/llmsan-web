@@ -23,7 +23,7 @@ LLMSAN is composed of two parts:
 ### 1. Clone This Repository
 
 ```bash
-git clone https://github.com/dunnokiet/llmsan-web.git
+git clone https://github.com/dunnokiet/llmsan-api.git
 cd llmsan-web
 ```
 
@@ -32,9 +32,9 @@ cd llmsan-web
 ```bash
 npm install
 # or
-yarn instll
+yarn install
 # or
-pnpm instaall
+pnpm install
 # or
 bun install
 ```
@@ -58,8 +58,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 To run the LLMSAN backend locally:
 
 ```bash
-git clone https://github.com/dunnokiet/llmsan-fork.git
-cd llmsan-fork
+git clone https://github.com/dunnokiet/llmsan-api.git
+cd llmsan-api
 
 # Install dependencies
 pip install -r requirements.txt
