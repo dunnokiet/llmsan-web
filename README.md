@@ -8,7 +8,7 @@
 
 LLMSAN is composed of two parts:
 
-- **Backend**: [`llmsan-fork`](https://github.com/dunnokiet/llmsan-fork) – A FastAPI service that performs bug analysis and code sanitization using OpenAI models.
+- **Backend**: [`llmsan-api`](https://github.com/dunnokiet/llmsan-api) – A FastAPI service that performs bug analysis and code sanitization using OpenAI models.
 - **Frontend**: `llmsan-web` – A Next.js web application that communicates with the backend via REST APIs.
 
 ## Features
