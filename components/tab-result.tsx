@@ -25,7 +25,6 @@ export function TabResult({
   type,
   results,
   isAnalyzing,
-  model,
   fileName,
   handleChangeSantizedCode,
   handleChangeActiveTab,
@@ -46,7 +45,7 @@ export function TabResult({
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/sanitize?file_name=${fileName}&model_name=${model}&bug_type=${type}`,
+        `http://localhost:3000/api/sanitize?file_name=${fileName}&model_name=gpt-4.1-mini&bug_type=${type}`,
         {
           method: "POST",
         }
