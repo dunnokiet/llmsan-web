@@ -20,6 +20,7 @@ import {
 
 import { Badge } from "./ui/badge";
 import { toast } from "sonner";
+import { Skeleton } from "./ui/skeleton";
 
 export function TabResult({
   type,
@@ -336,6 +337,8 @@ export function TabResult({
               </div>
             )}
           </div>
+        ) : isAnalyzing ? (
+          <Skeleton className="flex flex-col h-[300px]" />
         ) : (
           <div className="flex flex-col items-center justify-center h-[300px] text-muted-foreground">
             <Code2 className="h-12 w-12 mb-4" />

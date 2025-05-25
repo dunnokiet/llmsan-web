@@ -151,7 +151,6 @@ export function TabEditor({
               <SelectContent>
                 <SelectItem value="gpt-4.1-mini">GPT-4.1 mini</SelectItem>
                 <SelectItem value="gpt-4o-mini">GPT-4o mini</SelectItem>
-                <SelectItem value="gpt-3.5-turbo">GPT-3.5 turbo</SelectItem>
               </SelectContent>
             </Select>
             <Select value={type} onValueChange={handleChangeType}>
