@@ -39,7 +39,21 @@ pnpm install
 bun install
 ```
 
-### 3. Start the Development Server
+### 3. Create an `.env.local` file
+
+```bash
+touch .env.local
+```
+
+### 4. Define your environment variables
+
+For example, to set the API base URL for backend requests:
+
+```
+API_BASE_URL=http://localhost:8000
+```
+
+### 5. Start the Development Server
 
 ```bash
 npm run dev
