@@ -1,5 +1,4 @@
 import { createHighlighter, makeSingletonHighlighter } from 'shiki';
-import { bundledLanguages } from 'shiki/bundle/web';
 
 
 const getHighlighter = makeSingletonHighlighter(createHighlighter);

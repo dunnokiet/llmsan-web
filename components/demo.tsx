@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useState } from "react";
 import { TabEditor } from "./tab-editor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { TabResult } from "./tab-result";

@@ -8,17 +8,7 @@ import {
   Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import { BugTypeChart } from "@/components/bug-type-chart";
-// import { CodeAnalyzer } from "@/components/code-analyzer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HeroSection } from "@/components/hero-section";
 import Demo from "@/components/demo";
 
@@ -40,7 +30,7 @@ export default function Home() {
                 Features
               </Link>
               <Link
-                href="https://github.com/chengpeng-wang/LLMSAN"
+                href="https://github.com/dunnokiet/llmsan-web"
                 target="_blank"
                 className="flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               >
@@ -204,7 +194,7 @@ export default function Home() {
           </p>
           <div className="flex gap-4">
             <Link
-              href="https://github.com/chengpeng-wang/LLMSAN"
+              href="https://github.com/dunnokiet/llmsan-web"
               target="_blank"
               className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
             >
