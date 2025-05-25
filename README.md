@@ -1,6 +1,6 @@
-# LLMSAN Web Interface
+# LLMSAN
 
-**LLMSAN Web** is the frontend interface for **LLMSAN** (Large Language Model Sanitizer), a system that uses LLMs to detect and sanitize bugs in source code. This interface allows developers to interact with the backend without needing to write API calls manually.
+**LLMSAN** is the frontend interface for **LLMSAN** (Large Language Model Sanitizer), a system that uses LLMs to detect and sanitize bugs in source code. This interface allows developers to interact with the backend without needing to write API calls manually.
 
 <img alt="Splash" src="./public/splash.png" width="100%" />
 
@@ -8,7 +8,7 @@
 
 LLMSAN is composed of two parts:
 
-- **Backend**: [`llmsan-fork`](https://github.com/dunnokiet/llmsan-fork) – A FastAPI service that performs bug analysis and code sanitization using OpenAI models.
+- **Backend**: [`llmsan-api`](https://github.com/dunnokiet/llmsan-api) – A FastAPI service that performs bug analysis and code sanitization using OpenAI models.
 - **Frontend**: `llmsan-web` – A Next.js web application that communicates with the backend via REST APIs.
 
 ## Features
@@ -23,7 +23,7 @@ LLMSAN is composed of two parts:
 ### 1. Clone This Repository
 
 ```bash
-git clone https://github.com/dunnokiet/llmsan-web.git
+git clone https://github.com/dunnokiet/llmsan-api.git
 cd llmsan-web
 ```
 
@@ -32,9 +32,9 @@ cd llmsan-web
 ```bash
 npm install
 # or
-yarn instll
+yarn install
 # or
-pnpm instaall
+pnpm install
 # or
 bun install
 ```
@@ -53,13 +53,13 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Backend Setup (`llmsan-fork`)
+## Backend Setup (`llmsan-api`)
 
 To run the LLMSAN backend locally:
 
 ```bash
-git clone https://github.com/dunnokiet/llmsan-fork.git
-cd llmsan-fork
+git clone https://github.com/dunnokiet/llmsan-api.git
+cd llmsan-api
 
 # Install dependencies
 pip install -r requirements.txt
