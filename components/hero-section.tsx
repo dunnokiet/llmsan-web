@@ -20,7 +20,7 @@ export function HeroSection() {
                 outputs.
               </p>
             </div>
-            <div className="flex flex-col gap-2 min-[400px]:flex-row">
+            <div className="flex flex-col gap-2 min-[640px]:flex-row">
               <Button size="lg" className="gap-1" asChild>
                 <Link href="#demo">
                   Try Demo
@@ -52,7 +52,7 @@ export function HeroSection() {
             </div>
           </div>
           <div className="flex items-center justify-center">
-            <Card className="relative overflow-hidden rounded-lg border-2 border-primary/20 transition-all duration-300 hover:border-primary/50 hover:shadow-lg group">
+            <Card className="relative overflow-hidden rounded-lg border-2 border-primary/20 transition-all duration-300 hover:border-primary/50 hover:shadow-lg group hidden sm:block">
               <div className="overflow-hidden font-mono text-xs xl:text-sm">
                 <div className="text-xs xl:text-base">
                   <CodeBlock lang="java">
