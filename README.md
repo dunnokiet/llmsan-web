@@ -2,7 +2,7 @@
 
 **LLMSAN** is the frontend interface for **LLMSAN** (Large Language Model Sanitizer), a system that uses LLMs to detect and sanitize bugs in source code. This interface allows developers to interact with the backend without needing to write API calls manually.
 
-<img alt="Splash" src="./public/splash.png" width="100%" />
+![Demo Giao Diện](public/splash.png)
 
 ## Overview
 
